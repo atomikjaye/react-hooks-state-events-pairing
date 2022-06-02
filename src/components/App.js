@@ -54,7 +54,7 @@ function App() {
 
   function handleVotes(vote) {
     if (vote.name === 'down') {
-      setDownVote(vote.number - 1)
+      setDownVote(vote.number + 1)
     } else if (vote.name === 'up') {
       setUpVote(vote.number + 1)
     }

@@ -1,51 +1,56 @@
 import React, { useState } from 'react'
+import Video from './Video.js';
+import Header from './Header.js';
+import VideoStats from './VideoStats.js';
+import VideoVotes from './VideoVotes.js';
+import CommentsDisplay from './CommentsDisplay.js';
 import video from "../data/video.js";
 
-function Header({ title }) {
-  return <h1>{title}</h1>
-}
+// function Header({ title }) {
+//   return <h1>{title}</h1>
+// }
 
-function VideoStats({ views, createdAt }) {
-  return (
-    <div>
-      <p>{views} Views | Uploaded {createdAt}</p>
-    </div>
-  )
-}
+// function VideoStats({ views, createdAt }) {
+//   return (
+//     <div>
+//       <p>{views} Views | Uploaded {createdAt}</p>
+//     </div>
+//   )
+// }
 
-function VideoVotes({ upvotes, downvotes, handleVotes, upVoteCount, downVoteCount }) {
-  function sendVotes(e) {
-    console.log(e.target.id, e.target.value)
-    handleVotes({
-      name: e.target.id,
-      number: parseInt(e.target.value)
-    })
-  }
-  return (
-    <div>
-      <button id="up" onClick={sendVotes} value={upVoteCount}>{upVoteCount}👍🏽</button>
-      <button id="down" onClick={sendVotes} value={downVoteCount}>{downVoteCount}👎🏽</button>
-    </div>
-  )
-}
+// function VideoVotes({ upvotes, downvotes, handleVotes, upVoteCount, downVoteCount }) {
+//   function sendVotes(e) {
+//     console.log(e.target.id, e.target.value)
+//     handleVotes({
+//       name: e.target.id,
+//       number: parseInt(e.target.value)
+//     })
+//   }
+//   return (
+//     <div>
+//       <button id="up" onClick={sendVotes} value={upVoteCount}>{upVoteCount}👍🏽</button>
+//       <button id="down" onClick={sendVotes} value={downVoteCount}>{downVoteCount}👎🏽</button>
+//     </div>
+//   )
+// }
 
-function CommentsDisplay({ comments }) {
-  const displayComments = comments.map((comment) => {
-    return (
-      <Comment user={comment.user} comment={comment.comment} />
-    )
-  })
-  return displayComments
-}
+// function CommentsDisplay({ comments }) {
+//   const displayComments = comments.map((comment) => {
+//     return (
+//       <Comment user={comment.user} comment={comment.comment} />
+//     )
+//   })
+//   return displayComments
+// }
 
-function Comment({ user, comment }) {
-  return (
-    <div>
-      <h3>{user}</h3>
-      <p>{comment}</p>
-    </div>
-  )
-}
+// function Comment({ user, comment }) {
+//   return (
+//     <div>
+//       <h3>{user}</h3>
+//       <p>{comment}</p>
+//     </div>
+//   )
+// }
 
 
 function App() {
@@ -74,22 +79,22 @@ function App() {
 
   return (
     <div className="App">
-      <iframe
+      {/* <iframe
         width="919"
         height="525"
         src="https://www.youtube.com/embed/dQw4w9WgXcQ"
         frameBorder="0"
         allowFullScreen
         title="Thinking in React"
-      />
+      /> */}
+      <Video videoURL={video.embedUrl} title={video.title} />
       <Header title={video.title} />
       <VideoStats views={video.views} createdAt={video.createdAt} />
       <VideoVotes
         handleVotes={handleVotes}
         upVoteCount={upVote}
         downVoteCount={downVote}
-        upvotes={video.upvotes}
-        downvotes={video.downvotes} />
+      />
       <button onClick={handleComments}>{commentsShow ? 'Hide Comments' : 'Show Comments'}</button>
       {commentsShow ? <CommentsDisplay comments={video.comments} /> : null}
     </div>

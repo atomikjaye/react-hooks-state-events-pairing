@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import video from "../data/video.js";
 
 function Header({ title }) {
@@ -12,11 +13,18 @@ function VideoStats({ views, createdAt }) {
   )
 }
 
-function VideoVotes({ upvotes, downvotes }) {
+function VideoVotes({ upvotes, downvotes, handleVotes, upVoteCount, downVoteCount }) {
+  function sendVotes(e) {
+    console.log(e.target.id, e.target.value)
+    handleVotes({
+      name: e.target.id,
+      number: parseInt(e.target.value)
+    })
+  }
   return (
     <div>
-      <button>{upvotes}👍🏽</button>
-      <button>{downvotes}👎🏽</button>
+      <button id="up" onClick={sendVotes} value={upVoteCount}>{upVoteCount}👍🏽</button>
+      <button id="down" onClick={sendVotes} value={downVoteCount}>{downVoteCount}👎🏽</button>
     </div>
   )
 }
@@ -41,6 +49,16 @@ function Comment({ user, comment }) {
 
 
 function App() {
+  const [upVote, setUpVote] = useState(video.upvotes)
+  const [downVote, setDownVote] = useState(video.downvotes)
+
+  function handleVotes(vote) {
+    if (vote.name === 'down') {
+      setDownVote(vote.number - 1)
+    } else if (vote.name === 'up') {
+      setUpVote(vote.number + 1)
+    }
+  }
   console.log("Here's your data:", video);
 
   return (
@@ -55,7 +73,12 @@ function App() {
       />
       <Header title={video.title} />
       <VideoStats views={video.views} createdAt={video.createdAt} />
-      <VideoVotes upvotes={video.upvotes} downvotes={video.downvotes} />
+      <VideoVotes
+        handleVotes={handleVotes}
+        upVoteCount={upVote}
+        downVoteCount={downVote}
+        upvotes={video.upvotes}
+        downvotes={video.downvotes} />
       <button>Hide Comments</button>
       <CommentsDisplay comments={video.comments} />
     </div>

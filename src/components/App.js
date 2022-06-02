@@ -51,12 +51,23 @@ function Comment({ user, comment }) {
 function App() {
   const [upVote, setUpVote] = useState(video.upvotes)
   const [downVote, setDownVote] = useState(video.downvotes)
+  const [commentsShow, setCommentsShow] = useState(true)
 
   function handleVotes(vote) {
     if (vote.name === 'down') {
       setDownVote(vote.number + 1)
     } else if (vote.name === 'up') {
       setUpVote(vote.number + 1)
+    }
+  }
+
+  function handleComments() {
+    // console.log(commentsShow)
+    if (commentsShow) {
+      setCommentsShow(false)
+    } else {
+      setCommentsShow(true)
+
     }
   }
   console.log("Here's your data:", video);
@@ -79,8 +90,8 @@ function App() {
         downVoteCount={downVote}
         upvotes={video.upvotes}
         downvotes={video.downvotes} />
-      <button>Hide Comments</button>
-      <CommentsDisplay comments={video.comments} />
+      <button onClick={handleComments}>{commentsShow ? 'Hide Comments' : 'Show Comments'}</button>
+      {commentsShow ? <CommentsDisplay comments={video.comments} /> : null}
     </div>
   );
 }
